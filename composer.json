@@ -1,0 +1,23 @@
+{
+    "name": "blockforce/cryptum-sdk",
+    "description": "This project is an sdk to integrate an php project with Cryptum",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yury Alencar Lima",
+            "email": "yury@blockforce.in"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require": {
+        "php": ">=7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    }
+}
