@@ -2,3 +2,9 @@
 vendor/
 *.lock
 composer.phar
+
+# MacOS files
+.DS_Store
+
+# Not Send files
+not_send_test.php
