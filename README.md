@@ -81,15 +81,12 @@ Below is an short description using code how you can use cryptum-sdk to integrat
 
 To configure cryptum-sdk you need only provide an config in format JSON.
 
-```js
-const CryptumSDK = require('cryptum-sdk')
+```php
+$config = new stdClass();
+$config->environment = "development"; // or production
+$config->apiKey = "your-secret-and-valid-api-key";
 
-const sdk = new CryptumSDK({
-  config: {
-    enviroment: 'development',
-    apiKey: 'my-secret-api-key',
-  },
-})
+$sdk = new CryptumSDK($config);
 ```
 
 To see environments available you can see here:
