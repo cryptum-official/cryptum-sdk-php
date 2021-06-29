@@ -2,15 +2,24 @@
 
 namespace services;
 
+use CurlHandle;
 use Exception;
 
 class Services {
 	private $config;
   
- function __construct($config) {
+  /**
+   * Need config to instance correctly
+   * 
+   * config -- an object with environment and apiKey.
+   */
+  function __construct($config) {
     $this->config = $config;
   }
 
+  /**
+   * Method to get url by enviroment setted in $config variable
+   */
   private function getUrl(): string {
     if($this->config->environment == "development") return "https://api-dev.cryptum.io";
     if($this->config->environment == "production") return "https://prouction.url.com";
@@ -18,6 +27,11 @@ class Services {
     throw new Exception("Environment not found");
   }
 
+  /**
+   * Method to set headers in an curl request
+   * 
+   * @param CurlHandle $curl - an curl handle to add headers
+   */
   private function setHeaders($curl): void {
     $headers = array();
     $headers[] = 'Accept: application/json';
@@ -26,7 +40,10 @@ class Services {
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
   }
 
-  public function get($finalUrl) {
+  /**
+   * Method to make an get in respective url.
+   */
+  public function get(string $finalUrl) {
     $url = $this->getUrl();
     $curl = curl_init($url . $finalUrl);
 
@@ -39,7 +56,10 @@ class Services {
     return $response;
   }
 
-  public function post($finalUrl, $payload) {
+  /**
+   * Method to make an get in respective url.
+   */
+  public function post(string $finalUrl, $payload) {
     $url = $this->getUrl();
     $curl = curl_init($url . $finalUrl);
 
