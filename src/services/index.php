@@ -53,6 +53,8 @@ class Services {
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 
     $response = json_decode(curl_exec($curl));
+
+    curl_close($curl);
     return $response;
   }
 
@@ -70,7 +72,16 @@ class Services {
     $this->setHeaders($curl);
 
     $response = json_decode(curl_exec($curl));
+
+    $this->hasError($response, $curl);
+
+    curl_close($curl);
     return $response;
+  }
+
+  private function hasError($response, $curl) {
+    if(curl_error($curl)) throw new Exception(curl_error($curl));
+    if($response->error) throw new Exception("Message: " . $response->error->message . " -- Type: " .$response->error->type);
   }
 }
 ?> 
