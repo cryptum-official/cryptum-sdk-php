@@ -1,29 +1,32 @@
 <?php
 
-namespace services;
+namespace Cryptum\Services;
 
 use CurlHandle;
 use Exception;
 
-class Services {
-	private $config;
-  
+class Services
+{
+  private $config;
+
   /**
    * Need config to instance correctly
    * 
    * config -- an object with environment and apiKey.
    */
-  function __construct($config) {
+  function __construct($config)
+  {
     $this->config = $config;
   }
 
   /**
    * Method to get url by enviroment setted in $config variable
    */
-  private function getUrl(): string {
-    if($this->config->environment == "development") return "https://api-dev.cryptum.io";
-    if($this->config->environment == "production") return "https://prouction.url.com";
-    
+  private function getUrl(): string
+  {
+    if ($this->config->environment == "development") return "https://api-dev.cryptum.io";
+    if ($this->config->environment == "production") return "https://prouction.url.com";
+
     throw new Exception("Environment not found");
   }
 
@@ -32,7 +35,8 @@ class Services {
    * 
    * @param CurlHandle $curl - an curl handle to add headers
    */
-  private function setHeaders($curl): void {
+  private function setHeaders($curl): void
+  {
     $headers = array();
     $headers[] = 'Accept: application/json';
     $headers[] = 'x-api-key: ' . $this->config->apiKey;
@@ -43,7 +47,9 @@ class Services {
   /**
    * Method to make an get in respective url.
    */
-  public function get(string $finalUrl) {
+  public function get(string $finalUrl)
+  {
+
     $url = $this->getUrl();
     $curl = curl_init($url . $finalUrl);
 
@@ -54,6 +60,8 @@ class Services {
 
     $response = json_decode(curl_exec($curl));
 
+    $this->hasError($response, $curl);
+
     curl_close($curl);
     return $response;
   }
@@ -61,7 +69,8 @@ class Services {
   /**
    * Method to make an get in respective url.
    */
-  public function post(string $finalUrl, $payload) {
+  public function post(string $finalUrl, $payload)
+  {
     $url = $this->getUrl();
     $curl = curl_init($url . $finalUrl);
 
@@ -79,9 +88,13 @@ class Services {
     return $response;
   }
 
-  private function hasError($response, $curl) {
-    if(curl_error($curl)) throw new Exception(curl_error($curl));
-    if($response->error) throw new Exception("Message: " . $response->error->message . " -- Type: " .$response->error->type);
+  private function hasError($response, $curl)
+  {
+    if (curl_error($curl)) {
+      throw new Exception(curl_error($curl));
+    }
+    if ($response->error) {
+      throw new Exception("Message: " . $response->error->message . " -- Type: " . $response->error->type);
+    }
   }
 }
-?> 
