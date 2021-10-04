@@ -7,21 +7,23 @@ use Cryptum\Services\Services;
 class PricesController
 {
 
-    private $config = null;
+    private $services = null;
 
     function __construct($config)
     {
-        $this->config = $config;
+        $this->services = new Services($config);
     }
 
     /**
-     * Async method to retrieve prices of the given asset
+     * Retrieve prices of the given asset
      * @param string $asset
      */
     function getPrices($asset)
     {
-        $services = new Services($this->config);
-        return $services->get("/prices/".$asset);
-
+        try {
+            return $this->services->get("/prices/" . $asset);
+        } catch (\Exception $e) {
+            throw new \Exception($e);
+        }
     }
 }

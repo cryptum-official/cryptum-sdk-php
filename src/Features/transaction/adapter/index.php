@@ -5,7 +5,7 @@ namespace transaction\adapter;
 require_once(__DIR__ . '/../../../services/index.php');
 require_once(__DIR__ . '/interface.php');
 
-use services\Services;
+use Cryptum\Services\Services;
 
 class TransactionAdapter implements ITransactionAdapter {
   

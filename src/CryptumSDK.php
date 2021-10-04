@@ -3,6 +3,7 @@ namespace Cryptum;
 
 use Cryptum\Features\Controllers\PricesController;
 use Cryptum\Features\Controllers\SwapController;
+use Cryptum\Features\Controllers\WebhookController;
 use transaction\controller\TransactionController;
 
 
@@ -24,14 +25,29 @@ class CryptumSDK {
   /**
    * Method to get a controller to manipulate prices
    *
-   * @returns PricesController instance
+   * @return PricesController
    */
   function getPricesController() {
     return new PricesController($this->config);
   }
 
+
+  /**
+   * Method to get a controller to manipulate swap
+   *
+   * @return SwapController
+   */
   function getSwapController(){
     return new SwapController($this->config);
+  }
+
+  /**
+   * Method to get a controller to manipulate webhooks
+   *
+   * @return WebhookController
+   */  
+  function getWebookController() {
+    return new WebhookController($this->config);
   }
 }
 ?> 

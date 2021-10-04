@@ -25,7 +25,7 @@ class Services
   private function getUrl(): string
   {
     if ($this->config->environment == "development") return "https://api-dev.cryptum.io";
-    if ($this->config->environment == "production") return "https://prouction.url.com";
+    if ($this->config->environment == "production") return "https://api.cryptum.io";
 
     throw new Exception("Environment not found");
   }
@@ -93,7 +93,8 @@ class Services
     if (curl_error($curl)) {
       throw new Exception(curl_error($curl));
     }
-    if ($response->error) {
+
+    if (isset($response->error)) {
       throw new Exception("Message: " . $response->error->message . " -- Type: " . $response->error->type);
     }
   }
