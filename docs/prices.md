@@ -5,8 +5,10 @@ List currency price quotations in realtime.
 Possible tokens are: XLM, XRP, BTC, ETH, CELO, BNB, MDA, HTR.
 
 ```php
-$getPricesController = $cryptumSdk->getPricesController();
-$prices = $getPricesController->getPrices('XLM');
+$sdk = new CryptumSDK($config);
+
+$pricesController = $sdk->getPricesController();
+$prices = $pricesController->getPrices('XLM');
 
 print_r($prices);
 

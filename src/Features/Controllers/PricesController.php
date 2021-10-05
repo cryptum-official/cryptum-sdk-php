@@ -18,7 +18,7 @@ class PricesController
      * Retrieve prices of the given asset
      * @param string $asset
      */
-    function getPrices($asset)
+    function getPrices(string $asset)
     {
         try {
             return $this->services->get("/prices/" . $asset);
