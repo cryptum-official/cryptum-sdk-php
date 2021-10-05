@@ -3,6 +3,7 @@
 namespace Cryptum\Features\Controllers;
 
 use Cryptum\Services\Services;
+use Cryptum\Services\Validations\WebhookValidations;
 
 class WebhookController
 {
@@ -19,11 +20,12 @@ class WebhookController
      * 
      * @param array $asset['url', 'address', 'confirmations', 'asset']
      */
-    function createWebhook(array $asset)
+    function createWebhook(array $asset, string $protocol)
     {
         try {
-            $webhook['event'] = $this->event;
-            return $this->services->post("/webhook", $asset);
+            $asset['event'] = $this->event;
+            WebhookValidations::fielsCreateWebhook($asset);
+            return $this->services->post("/webhook?protocol=" . $protocol, $asset);
         } catch (\Exception $e) {
             throw new \Exception($e);
         }
@@ -35,20 +37,23 @@ class WebhookController
      * @param string asset asset to get respective webhooks
      * @param string protocol protocol to get yours webhooks
      */
-    function getWebhooks(string $asset, string $protocol)
+    function getWebhooks(array $asset)
     {
         try {
-
-            $query = [
-                'asset' => $asset,
-                'protocol' => $protocol
-            ];
-            return  $this->services->get("/webhook?" . http_build_query($query));
+            WebhookValidations::fielsGetWebhook($asset);
+            return  $this->services->get("/webhook?" . http_build_query($asset));
         } catch (\Exception $e) {
             throw new \Exception($e);
         }
     }
 
+    function deleteWebhook(string $asset, string $webhookId, array $args){
+        try {
+            WebhookValidations::fielsDeleteWebhook($args);
+            return  $this->services->delete("/webhook/" . $asset . '/' . $webhookId, $args);
+        } catch (\Exception $e) {
+            throw new \Exception($e);
+        }
+    }
 
-    
 }
