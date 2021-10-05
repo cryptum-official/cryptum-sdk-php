@@ -3,6 +3,8 @@
 namespace Cryptum\Features\Controllers;
 
 use Cryptum\Services\Services;
+use Cryptum\Services\Validations\SwapValidation;
+use Respect\Validation\Validator;
 
 class SwapController
 {
@@ -34,8 +36,9 @@ class SwapController
     function getMinimumAmount(array $currency)
     {
         try {
-            $minimun = $this->services->get("/swap/currencies/min-amount?" . http_build_query($currency));
-            return $minimun;
+            SwapValidation::fieldsMinimumAmount($currency);
+            $minimunAmount = $this->services->get("/swap/currencies/min-amount?" . http_build_query($currency));
+            return $minimunAmount;
         } catch (\Exception $e) {
             throw new \Exception($e);
         }
@@ -48,8 +51,9 @@ class SwapController
     function getEstimateAmount(array $currencies)
     {
         try {
-            $estimate = $this->services->get("/swap/currencies/estimate-amount?" . http_build_query($currencies));
-            return $estimate;
+            SwapValidation::fiedsEstimateAmount($currencies);
+            $estimateAmount = $this->services->get("/swap/currencies/estimate-amount?" . http_build_query($currencies));
+            return $estimateAmount;
         } catch (\Exception $e) {
             throw new \Exception($e);
         }
@@ -63,7 +67,7 @@ class SwapController
     function getOrder(string $id)
     {
         try {
-            $order = $this->services->get("/swap/orders/".$id);
+            $order = $this->services->get("/swap/orders/" . $id);
             return $order;
         } catch (\Exception $e) {
             throw new \Exception($e);
@@ -77,6 +81,7 @@ class SwapController
     function createOrder(array $order)
     {
         try {
+            SwapValidation::fiedsEstimateAmount($order);
             $order = $this->services->post("/swap/orders", $order);
             return $order;
         } catch (\Exception $e) {

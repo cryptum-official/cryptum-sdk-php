@@ -45,7 +45,7 @@ $swapController.getMinimumAmount($opts);
 ## Get estimate amount
 Get estimate amount to receive from the swap.
 
-### `$swapController.getEstimateAmount(opts)`
+### `$swapController.getEstimateAmount(opts);`
 Params:
 * `$opts['currencyFrom']` (string) (__required__) criptocurrency to swap from.
 * `$opts['currencyTo']` (string) (__required__) criptocurrency to swap to.
@@ -102,7 +102,6 @@ $opts = [
   ]
 
 $swapController.createOrder($opts);
-
 ```
 
 ## Get orders
