@@ -81,7 +81,7 @@ class SwapController
     function createOrder(array $order)
     {
         try {
-            SwapValidation::fiedsEstimateAmount($order);
+            SwapValidation::fieldsCreateOrder($order);
             $order = $this->services->post("/swap/orders", $order);
             return $order;
         } catch (\Exception $e) {

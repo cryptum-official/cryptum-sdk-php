@@ -2,7 +2,7 @@
 
 namespace Cryptum\Services\Validations;
 
-use Respect\Validation\Validator;
+use Cryptum\Services\Helpers\Validator;
 
 class SwapValidation
 {
@@ -11,20 +11,10 @@ class SwapValidation
      */
     static function fieldsMinimumAmount(array $currency)
     {
-        if (array_key_exists('currencyFrom', $currency)) {
-            if (is_string($currency['currencyFrom'])) {
-                throw new \Exception('currencyFrom must be string type');
-            }
-        } else {
-            throw new \Exception('`currencyFrom` is a required field');
-        }
-        if (array_key_exists('currencyTo', $currency)) {
-            if (Validator::keySet(Validator::key('currencyTo', Validator::stringType()))->validate($currency)) {
-                throw new \Exception('currencyTo must be string type');
-            }
-        } else {
-            throw new \Exception('`currencyTo` is a required field');
-        }
+        Validator::is_required($currency, 'currencyFrom');
+        Validator::is_string('currencyFrom', $currency['currencyFrom']);
+        Validator::is_required($currency, 'currencyTo');
+        Validator::is_string('currencyTo', $currency['currencyTo']);
     }
 
     /**
@@ -32,27 +22,9 @@ class SwapValidation
      */
     static function fiedsEstimateAmount(array $currencies)
     {
-        if (array_key_exists('currencyFrom', $currencies)) {
-            if (Validator::keySet(Validator::key('currencyFrom', Validator::stringType()))->validate($currencies)) {
-                throw new \Exception('currencies must be string type');
-            }
-        } else {
-            throw new \Exception('`currencyFrom` is a required field');
-        }
-        if (array_key_exists('currencyTo', $currencies)) {
-            if (Validator::keySet(Validator::key('currencyTo', Validator::stringType()))->validate($currencies)) {
-                throw new \Exception('`currencyTo` must be string type');
-            }
-        } else {
-            throw new \Exception('`currencyTo` is a required field');
-        }
-        if (array_key_exists('amount', $currencies)) {
-            if (Validator::keySet(Validator::key('amount', Validator::stringType()))->validate($currencies)) {
-                throw new \Exception('`amount` must be string type');
-            }
-        } else {
-            throw new \Exception('`amount` is a required field');
-        }
+        self::fieldsMinimumAmount($currencies);
+        Validator::is_required($currencies, 'amount');
+        Validator::is_float('amount', $currencies['amount']);
     }
 
     /**
@@ -61,65 +33,29 @@ class SwapValidation
      */
     static function fieldsCreateOrder(array $order)
     {
-        if (array_key_exists('currencyFrom', $order)) {
-            if (Validator::keySet(Validator::key('currencyFrom', Validator::stringType()))->validate($order)) {
-                throw new \Exception('currencies must be string type');
-            }
-        } else {
-            throw new \Exception('`currencies` is a required field');
-        }
-        if (array_key_exists('currencyTo', $order)) {
-            if (Validator::keySet(Validator::key('currencyTo', Validator::stringType()))->validate($order)) {
-                throw new \Exception('currencyTo must be string type');
-            }
-        } else {
-            throw new \Exception('`currencyTo` is a required field');
-        }
-        if (array_key_exists('amountFrom', $order)) {
-            if (Validator::keySet(Validator::key('amountFrom', Validator::stringType()))->validate($order)) {
-                throw new \Exception('amountFrom must be string type');
-            }
-        } else {
-            throw new \Exception('`amountFrom` is a required field');
-        }
-        if (array_key_exists('addressTo', $order)) {
-            if (Validator::keySet(Validator::key('addressTo', Validator::stringType()))->validate($order)) {
-                throw new \Exception('addressTo must be string type');
-            }
-        } else {
-            throw new \Exception('`addressTo` is a required field');
-        }
+
+        self::fieldsMinimumAmount($order);
+        Validator::is_required($order, 'amountFrom');
+        Validator::is_string('amountFrom', $order['amountFrom']);
+        Validator::is_required($order, 'addressTo');
+        Validator::is_string('addressTo', $order['addressTo']);
+
         if (array_key_exists('memoTo', $order)) {
-            if (Validator::keySet(Validator::key('memoTo', Validator::stringType()))->validate($order)) {
-                throw new \Exception('memoTo must be string type');
-            }
+            Validator::is_string('memoTo', $order['memoTo']);
         }
         if (array_key_exists('refundAddress', $order)) {
-            if (Validator::keySet(Validator::key('refundAddress', Validator::stringType()))->validate($order)) {
-                throw new \Exception('refundAddress must be string type');
-            }
+            Validator::is_string('refundAddress', $order['refundAddress']);
         }
         if (array_key_exists('refundMemo', $order)) {
-            if (Validator::keySet(Validator::key('refundMemo', Validator::stringType()))->validate($order)) {
-                throw new \Exception('refundMemo must be string type');
-            }
-        }                
+            Validator::is_string('refundMemo', $order['refundMemo']);
+        }
     }
 
-    static function filedsOrders(array $args){
-        if (array_key_exists('limit', $args)) {
-            if (Validator::keySet(Validator::key('limit', Validator::intType()))->validate($args)) {
-                throw new \Exception('limit must be integer type');
-            }
-        } else {
-            throw new \Exception('`limit` is a required field');
-        }
-        if (array_key_exists('offset', $args)) {
-            if (Validator::keySet(Validator::key('offset', Validator::intType()))->validate($args)) {
-                throw new \Exception('offset must be integer type');
-            }
-        } else {
-            throw new \Exception('`offset` is a required field');
-        }
+    static function filedsOrders(array $args)
+    {
+        Validator::is_required($args, 'limit');
+        Validator::is_int('limit', $args['limit']);
+        Validator::is_required($args, 'offset');
+        Validator::is_int('offset', $args['offset']);
     }
 }

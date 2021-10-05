@@ -1,6 +1,6 @@
 <?php
 
-namespace Cryptum\Services\Validations;
+namespace Cryptum\Services\Helpers;
 
 
 class Validator
@@ -24,4 +24,10 @@ class Validator
             throw new \Exception($key . ' must be string type');
         }        
     }
+
+    static function is_float(string $key, $value){
+        if(!is_float($value)){
+            throw new \Exception($key . ' must be float type');
+        }        
+    }    
 }

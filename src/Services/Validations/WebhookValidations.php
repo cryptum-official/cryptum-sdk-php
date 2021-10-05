@@ -2,6 +2,8 @@
 
 namespace Cryptum\Services\Validations;
 
+use Cryptum\Services\Helpers\Validator;
+
 class WebhookValidations
 {
 

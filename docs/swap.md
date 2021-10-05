@@ -10,7 +10,7 @@
 First create an instance of swap controller to call all methods below.
 
 ```php
-$swapController = $sdk.getSwapController()
+$swapController = $sdk->getSwapController()
 ```
 
 ## Get supported currencies
@@ -19,14 +19,14 @@ Get a list of all supported currencies to swap from and to. Examples: BTC, ETH, 
 Examples:
 
 ```php
-
-$swapController.getSupportedCurrencies();
+$supportedCurrencies = $swapController->getSupportedCurrencies();
+print_r($supportedCurrencies);
 ```
 
 ## Get minimum amount
 Get the minimum amount to swap.
 
-### `$swapController.getMinimumAmount($opts)`
+### `$swapController->getMinimumAmount($opts)`
 Params:
 * `$opts['currencyFrom']` (string) (__required__) criptocurrency to swap from.
 * `$opts['currencyTo']` (string) (__required__) criptocurrency to swap to.
@@ -39,17 +39,18 @@ $opts = [
     'currencyTo' => 'ETH'
 ];
 
-$swapController.getMinimumAmount($opts);
+$minimumAmount = $swapController->getMinimumAmount($opts);
+print_r($minimumAmount);
 ```
 
 ## Get estimate amount
 Get estimate amount to receive from the swap.
 
-### `$swapController.getEstimateAmount(opts);`
+### `$swapController->getEstimateAmount(opts);`
 Params:
 * `$opts['currencyFrom']` (string) (__required__) criptocurrency to swap from.
 * `$opts['currencyTo']` (string) (__required__) criptocurrency to swap to.
-* `$opts['amount']` (string) (__required__) criptocurrency amount to estimate.
+* `$opts['amount']` (float) (__required__) criptocurrency amount to estimate.
 
 Examples:
 
@@ -57,15 +58,16 @@ Examples:
 $opts = [
     'currencyFrom' => 'BTC',
     'currencyTo' => 'ETH',
-    'amount' = '0.1'
+    'amount' => 0.1
 ];
 
-$swapController.getEstimateAmount($opts);
+$estimateAmount = $swapController->getEstimateAmount($opts);
+print_r($estimateAmount);
 ```
 ## Get order
 Get the swap order by its id.
 
-### `$swapController.getOrder(id);`
+### `$swapController->getOrder(id);`
 Params:
 * `id` (string) (__required__) swap order id.
 
@@ -73,17 +75,18 @@ Example:
 ```php
 $id = '41c62023-ec12-4d5c-8ea3-b1b93a4d63ac';
 
-$swapController.getOrder($id);
+$order =  $swapController->getOrder($id);
+print_r($order);
 ```
 
 ## Create order
 Create new swap order.
 
-### `$swapController.createOrder(opts);`
+### `$swapController->createOrder($opts);`
 Params:
 * `$opts['currencyFrom']` (string) (__required__) currency to swap from
 * `$opts['currencyTo']` (string) (__required__) currency to swap to
-* `$opts['amount']` (string) (__required__) amount to swap from
+* `$opts['amountFrom']` (string) (__required__) amount to swap from
 * `$opts['addressTo']` (string) (__required__) address to swap to
 * `$opts['memoTo']` (string) memo or extra id string to pass along with the addressTo (only for some currencies like XLM, XRP, etc)
 * `$opts['refundAddress']` (string) (__required__) address to return funds to the user in case the swapping goes wrong
@@ -91,23 +94,25 @@ Params:
 
 Example:
 ```php
+
 $opts = [
     'currencyFrom' => "SOL",
     'currencyTo' => "ETH",
     'amountFrom' => "5.81",
     'addressTo' => "0x0Cbed4D3f2...d8b1A7B5185",
-    'memoTo' => null,
-    'refundAddress' => null,
-    'refundMemo' => null
-  ]
+    // 'memoTo' => null,
+    // 'refundAddress' => null,
+    // 'refundMemo' => null
+];
 
-$swapController.createOrder($opts);
+$order = $swapController->createOrder($opts);
+print_r($order);
 ```
 
 ## Get orders
 Get all swap orders.
 
-### `swapController.getOrders(opts);`
+### `$swapController->getOrders($opts);`
 Params:
 * `$opts['limit']` (number) (__required__)
 * `$opts['offset']` (number) (__required__)
@@ -119,5 +124,5 @@ $opts = [
    'offset' => 1
 ];
 
-$swapController.getOrders($opts);
+$swapController->getOrders($opts);
 ```
