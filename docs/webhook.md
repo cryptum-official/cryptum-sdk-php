@@ -5,7 +5,9 @@
 You need only instantiate Webhook controller and send your webhook to cryptum 🚀
 
 ```php
-$webhookController = $sdk.getWebhooksController();
+$webhookController = $sdk->getWebookController();
+
+$protocol = "ETHEREUM";
 
 $opts = [
   'asset' => 'ETH',
@@ -15,9 +17,8 @@ $opts = [
   'protocol' => 'ETHEREUM'  
 ];
 
-$webhook = $webhookController.createWebhook($opts);
+$webhook = $webhookController->createWebhook($opts, $protocol);
 print_r($webhook);
-// Log your WebhookCryptum
 ```
 
 ps.: If you not provide an WebhookCryptum valid, the Cryptum sdk return an exception.
@@ -27,13 +28,14 @@ ps.: If you not provide an WebhookCryptum valid, the Cryptum sdk return an excep
 You need only instantiate Webhook controller and your protocol to cryptum 🚀
 
 ```php
-$webhookController = $sdk.getWebhooksController();
+$webhookController = $sdk->getWebookController();
 
-$protocol = 'BITCOIN';
-
-$webhooks = $webhookController.getWebhooks($protocol);
-print_r(webhooks);
-// Log your WebhookCryptum list
+$args = [
+    'protocol' => 'BITCOIN',
+    // 'asset' => 'BTC'
+];
+$webhooks = $webhookController->getWebhooks($args);
+print_r($webhooks);
 ```
 
 ps.: If you not provide an asset or protocol valid, the Cryptum sdk return an exception.
@@ -43,14 +45,16 @@ ps.: If you not provide an asset or protocol valid, the Cryptum sdk return an ex
 You need only instantiate Webhook controller and send your asset, protocol and webhookId to cryptum 🚀
 
 ```php
-$webhookController = $sdk.getWebhooksController();
+$webhookController = $sdk->getWebookController();
 
-$opts = [
-  'protocol' => 'BITCOIN',
-  'webhookId' => 'ba291cc3-1e29-4c70-b716-b4185891c569'
+$args = [
+    'asset' => 'ETH', 
+    'protocol' => "ETHEREUM",
+    'webhookId' => '88f19287-884b-43bd-bdcc-3db5a501fb24'
 ];
 
-$webhooks = $webhookController.destroyWebhook($opts);
+$webhooks = $webhookController->deleteWebhook($args);
+print_r($webhooks);
 ```
 
-ps.: If you don't provide an asset, protocol and webhookId valid, the Cryptum sdk return an exception.
+ps.: If you don't provide an protocol and webhookId valid, the Cryptum sdk return an exception.

@@ -34,8 +34,7 @@ class WebhookController
     /**
      * Method to get webhooks of the Cryptum
      *
-     * @param string asset asset to get respective webhooks
-     * @param string protocol protocol to get yours webhooks
+     * @param array asset to get respective webhooks
      */
     function getWebhooks(array $asset)
     {
@@ -47,10 +46,9 @@ class WebhookController
         }
     }
 
-    function deleteWebhook(string $asset, string $webhookId, array $args){
+    function deleteWebhook(array $webhook){
         try {
-            WebhookValidations::fielsDeleteWebhook($args);
-            return  $this->services->delete("/webhook/" . $asset . '/' . $webhookId, $args);
+            return $this->services->delete("/webhook/" . $webhook['asset'] . "/" . $webhook['webhookId'] . '?protocol=' . $webhook['protocol'], []);
         } catch (\Exception $e) {
             throw new \Exception($e);
         }

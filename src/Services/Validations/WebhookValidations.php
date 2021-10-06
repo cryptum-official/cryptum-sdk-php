@@ -1,7 +1,7 @@
 <?php
 
 namespace Cryptum\Services\Validations;
-
+ 
 use Cryptum\Services\Helpers\Validator;
 
 class WebhookValidations
@@ -9,11 +9,15 @@ class WebhookValidations
 
     static function fielsGetWebhook(array $webhook){
         Validator::is_required($webhook, 'protocol');
-        Validator::is_string('asset', $webhook['asset']);
-        Validator::is_int('limit', $webhook['limit']);
-        Validator::is_int('offset', $webhook['offset']);
-        Validator::is_string('startDate', $webhook['startDate']);
-        Validator::is_string('endDate', $webhook['endDate']);
+        Validator::is_string('protocol', $webhook['protocol']);
+
+        if (array_key_exists('asset', $webhook)) {
+            Validator::is_string('asset', $webhook['asset']);
+        }
+        // Validator::is_int('limit', $webhook['limit']);
+        // Validator::is_int('offset', $webhook['offset']);
+        // Validator::is_string('startDate', $webhook['startDate']);
+        // Validator::is_string('endDate', $webhook['endDate']);
     }
 
     static function fielsCreateWebhook(array $webhook){

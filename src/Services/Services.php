@@ -98,13 +98,12 @@ class Services
     $curl = curl_init($url . $finalUrl);
 
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
     curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($payload));
 
     $this->setHeaders($curl);
 
     $response = json_decode(curl_exec($curl));
-
     $this->hasError($response, $curl);
 
     curl_close($curl);

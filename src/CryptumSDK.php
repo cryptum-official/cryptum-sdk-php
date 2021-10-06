@@ -10,7 +10,7 @@ use transaction\controller\TransactionController;
 /**
  * Cryptum SDK
  */
-class CryptumSDK {
+class CryptumSDK { 
 	private $config;
   
   function __construct($config) {
